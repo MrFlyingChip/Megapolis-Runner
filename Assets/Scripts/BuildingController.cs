@@ -38,5 +38,9 @@ public class BuildingController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        if(transform.position.x < -10)
+        {
+            FindObjectOfType<BuildingSpawner>().DestroyBuilding(this);
+        }
 	}
 }

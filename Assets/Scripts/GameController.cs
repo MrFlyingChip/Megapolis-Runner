@@ -17,14 +17,27 @@ public class GameController : MonoBehaviour {
         backgroundController.minHeight = 0.1f;
         buildingSpawner.CleanBuildings();
         StartCoroutine(buildingSpawner.Spawner());
+        StartCoroutine(GameSpeed());
+    }
+    
+    IEnumerator GameSpeed()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10);
+            gameSpeed += 0.1f;
+        }
+        Physics.
     }
 
     public void StopGame()
     {
+        StopCoroutine(GameSpeed());
         gameSpeed = 0;
         mainMenuUI.SetActive(true);
         backgroundController.minHeight = -0.1f;
         buildingSpawner.CleanBuildings();
         buildingSpawner.SpawnBuildingsForMainMenu();
+        StopCoroutine(buildingSpawner.Spawner());
     }
 }

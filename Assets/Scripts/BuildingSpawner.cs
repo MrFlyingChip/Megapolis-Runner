@@ -51,9 +51,13 @@ public class BuildingSpawner : MonoBehaviour {
         }
         while (true)
         {
-            SpawnBuilding(Random.Range(1, 4), number * 0.25f, number);
+            SpawnBuilding(Random.Range(1, 4), number * 0.25f, buildings.Count);
             number++;
-            yield return new WaitForSeconds(GameController.gameSpeed);
+            while (buildings.Count > 15)
+            {
+                yield return 0;
+            }
+            yield return new WaitForSeconds(1 / GameController.gameSpeed);
         }
     }
    
@@ -65,7 +69,6 @@ public class BuildingSpawner : MonoBehaviour {
         buildingRect.anchorMax = new Vector2(minX + 0.25f, buildingRect.anchorMax.y);
         buildingRect.anchoredPosition = new Vector2(buildingRect.anchoredPosition.x, 300 * floors);
         float chanceForHoleRandom = Random.Range(0f, 1f);
-        Debug.Log(chanceForHoleRandom);
         if (chanceForHoleRandom > chanceForHole || (index != 0 && buildings[index - 1].hole)) building.GetComponent<BuildingController>().SpawnFlats(floors);
         else
         {
