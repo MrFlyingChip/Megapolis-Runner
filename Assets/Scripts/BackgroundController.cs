@@ -56,7 +56,7 @@ public class BackgroundController : MonoBehaviour {
         {
             background.color = Color.Lerp(sunsetColor, nightColor, (currentHour - 20) / 1);
         }
-        else if (currentHour >= 21 && currentHour < 3)
+        else if (currentHour >= 21 || currentHour < 3)
         {
             background.color = nightColor;
         }

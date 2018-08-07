@@ -9,6 +9,8 @@ public class BuildingSpawner : MonoBehaviour {
 
     public List<BuildingController> buildings = new List<BuildingController>();
 
+    public Transform buildingsHolder;
+
     public float chanceForHole;
 
     private void Start()
@@ -22,6 +24,7 @@ public class BuildingSpawner : MonoBehaviour {
         {
             Destroy(item.gameObject);
         }
+        buildings = new List<BuildingController>();
     }
 
 
@@ -39,6 +42,7 @@ public class BuildingSpawner : MonoBehaviour {
             SpawnBuilding(Random.Range(1, 3), i * 0.25f, i);
             buildings[i].TurnOnLightsInFlats();
         }
+        buildingsHolder.position = Vector3.zero;
     }
 
     public IEnumerator Spawner()
@@ -51,7 +55,9 @@ public class BuildingSpawner : MonoBehaviour {
         }
         while (true)
         {
-            SpawnBuilding(Random.Range(1, 4), number * 0.25f, buildings.Count);
+            int floors = Random.Range(1, buildings[buildings.Count - 1].floors + 2);
+            floors = Mathf.Min(floors, 4);
+            SpawnBuilding(floors, number * 0.25f, buildings.Count);
             number++;
             while (buildings.Count > 15)
             {
@@ -69,13 +75,13 @@ public class BuildingSpawner : MonoBehaviour {
         buildingRect.anchorMax = new Vector2(minX + 0.25f, buildingRect.anchorMax.y);
         buildingRect.anchoredPosition = new Vector2(buildingRect.anchoredPosition.x, 300 * floors);
         float chanceForHoleRandom = Random.Range(0f, 1f);
-        if (chanceForHoleRandom > chanceForHole || (index != 0 && buildings[index - 1].hole)) building.GetComponent<BuildingController>().SpawnFlats(floors);
+        if (chanceForHoleRandom > chanceForHole || (index != 0 && buildings[buildings.Count - 1].hole)) building.GetComponent<BuildingController>().SpawnFlats(floors);
         else
         {
             if (index != 0)
             {
                 building.GetComponent<BuildingController>().hole = true;
-                building.GetComponent<BuildingController>().floors = buildings[index - 1].floors;
+                building.GetComponent<BuildingController>().floors = buildings[buildings.Count - 1].floors;
             }     
         }
         buildings.Add(building.GetComponent<BuildingController>());

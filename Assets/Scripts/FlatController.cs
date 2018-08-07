@@ -6,6 +6,8 @@ public class FlatController : MonoBehaviour {
     public Color lightsOnColor;
     public Image back;
 
+    public BuildingController building;
+
     public void TurnLightsOn()
     {
         back.color = lightsOnColor;

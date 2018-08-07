@@ -24,6 +24,7 @@ public class BuildingController : MonoBehaviour {
         {
             GameObject flat = Instantiate(flatPrefab, thisTransform);
             flats.Add(flat.GetComponent<FlatController>());
+            flat.GetComponent<FlatController>().building = this;
             flat.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -300 * i);
         }
     }

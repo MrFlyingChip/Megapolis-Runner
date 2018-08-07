@@ -8,6 +8,6 @@ public class MainMenuController : MonoBehaviour {
 
     public void OnPlayButtonClicked()
     {
-        gameController.StartGame();
+        gameController.ShowAdForNewGame();
     }
 }
